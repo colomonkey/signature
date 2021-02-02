@@ -3,11 +3,12 @@ package signature
 import (
 	"errors"
 	"fmt"
-	stewstrings "github.com/stretchr/stew/strings"
-	"github.com/stretchr/tracer"
 	"net/url"
 	"regexp"
 	"strings"
+
+	stewstrings "github.com/stretchr/stew/strings"
+	"github.com/stretchr/tracer"
 )
 
 // FailedSignature is the string that will be used if signing fails.

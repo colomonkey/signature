@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/colomonkey/signature"
 	"github.com/stretchr/goweb"
 	"github.com/stretchr/goweb/context"
-	"github.com/stretchr/signature"
 	"github.com/stretchr/tracer"
 	"io/ioutil"
 	"log"

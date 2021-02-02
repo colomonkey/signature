@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/colomonkey/signature"
 	"github.com/stretchr/commander"
 	"github.com/stretchr/objx"
-	"github.com/stretchr/signature"
 )
 
 // Generates a 32 character random signature
