@@ -142,22 +142,21 @@ func ValidateSignatureWithTrace(method, requestUrl, body, privateKey string, tra
 	trace(tracer, "ValidateSignature: body=%s", body)
 	trace(tracer, "ValidateSignature: privateKey=%s", privateKey)
 
-	if !strings.Contains(requestUrl, "?") {
-		trace(tracer, "ValidateSignature: FAILED because there was no signature found.")
-		return false, ErrNoSignatureFound
+	// parse the URL
+	u, parseErr := url.ParseRequestURI(requestUrl)
+	if parseErr != nil {
+		return false, parseErr
 	}
-
-	segments := strings.Split(requestUrl, SignatureKey)
-
-	if len(segments) < 2 {
+	signature := u.Query().Get(SignatureKey)
+	if signature == "" {
 		trace(tracer, "ValidateSignature: Failed to get signature: %s", ErrNoSignatureFound)
 		return false, ErrNoSignatureFound
-	} else {
-		trace(tracer, "Segments: %s", segments)
 	}
+	q := u.Query()
+	q.Del(SignatureKey)
+	u.RawQuery = q.Encode()
 
-	modifiedURL := strings.TrimRight(segments[0], "&")
-	signature := strings.TrimLeft(segments[1], "=")
+	modifiedURL := u.String()
 
 	trace(tracer, "ValidateSignature: Modified URL (without signature): %s", modifiedURL)
 
